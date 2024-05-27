@@ -442,3 +442,26 @@ add-plugins:
     - grpcs
     - http
     - https
+# OAS-validation plugin configuration
+- selectors:
+  - $..services[*]
+  plugins:
+  - config:
+      allowed_header_parameters: Host,Content-Type,User-Agent,Accept,Content-Length 
+      api_spec: ""
+      header_parameter_check: false
+      include_base_path: false
+      notify_only_request_validation_failure: false
+      notify_only_response_body_validation_failure: false
+      query_parameter_check: false
+      validate_request_body: true
+      validate_request_header_params: true
+      validate_request_query_params: true
+      validate_request_uri_params: true
+      validate_response_body: false
+      verbose_response: true
+    enabled: true
+    name: oas-validation
+    protocols:
+    - http
+    - https
