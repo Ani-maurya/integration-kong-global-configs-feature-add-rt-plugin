@@ -448,7 +448,7 @@ add-plugins:
   plugins:
   - config:
       allowed_header_parameters: Host,Content-Type,User-Agent,Accept,Content-Length 
-      api_spec:
+      api_spec: |
       api_spec_encoded: true
       header_parameter_check: false
       include_base_path: false
