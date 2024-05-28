@@ -57,7 +57,7 @@ add-plugins:
       flush_timeout: 2
       headers:
         username: password
-      http_endpoint: 
+      http_endpoint: ""
       keepalive: 60000
       method: POST
       queue:
@@ -253,7 +253,7 @@ add-plugins:
       introspection_post_args_names: null
       introspection_post_args_values: null
       introspection_token_param_name: token
-      issuer:
+      issuer: ""
       issuers_allowed: null
       jwt_session_claim: sid
       jwt_session_cookie: null
