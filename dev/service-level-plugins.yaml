@@ -1,5 +1,29 @@
 _format_version: "3.0"
 add-plugins:
+# OAS Validation plugin configuration
+- selectors:
+  - $..services[*]
+  plugins:
+  - config:
+      allowed_header_parameters: Host,Content-Type,User-Agent,Accept,Content-Length 
+      api_spec: ""
+      api_spec_encoded: true
+      header_parameter_check: false
+      include_base_path: false
+      notify_only_request_validation_failure: false
+      notify_only_response_body_validation_failure: false
+      query_parameter_check: false
+      validate_request_body: true
+      validate_request_header_params: true
+      validate_request_query_params: true
+      validate_request_uri_params: true
+      validate_response_body: false
+      verbose_response: true
+    enabled: true
+    name: oas-validation
+    protocols:
+    - http
+    - https
 # key-auth plugin configuration
 - selectors:
   - $..services[*]
@@ -22,6 +46,40 @@ add-plugins:
     - https
     - ws
     - wss
+# Http log plugin configuration
+- selectors:
+  - $..services[*]
+  plugins:
+  - config:
+      content_type: application/json
+      custom_fields_by_lua:
+        request.headers.apikey: return "*******"
+      flush_timeout: 2
+      headers:
+        username: password
+      http_endpoint: 
+      keepalive: 60000
+      method: POST
+      queue:
+        initial_retry_delay: 0.01
+        max_batch_size: 10
+        max_bytes: null
+        max_coalescing_delay: 1
+        max_entries: 10000
+        max_retry_delay: 60
+        max_retry_time: 60
+      queue_size: null
+      retry_count: null
+      timeout: 10000
+    enabled: true
+    name: http-log
+    protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+    tags:
+      - dev
 # exit-transformer plugin configuration
 - selectors:
   - $..services[*]
@@ -195,7 +253,7 @@ add-plugins:
       introspection_post_args_names: null
       introspection_post_args_values: null
       introspection_token_param_name: token
-      issuer: https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_pmhLhUYdx
+      issuer:
       issuers_allowed: null
       jwt_session_claim: sid
       jwt_session_cookie: null
@@ -440,29 +498,5 @@ add-plugins:
     protocols:
     - grpc
     - grpcs
-    - http
-    - https
-# OAS-validation plugin configuration
-- selectors:
-  - $..services[*]
-  plugins:
-  - config:
-      allowed_header_parameters: Host,Content-Type,User-Agent,Accept,Content-Length 
-      api_spec: |
-      api_spec_encoded: true
-      header_parameter_check: false
-      include_base_path: false
-      notify_only_request_validation_failure: false
-      notify_only_response_body_validation_failure: false
-      query_parameter_check: false
-      validate_request_body: true
-      validate_request_header_params: true
-      validate_request_query_params: true
-      validate_request_uri_params: true
-      validate_response_body: false
-      verbose_response: true
-    enabled: true
-    name: oas-validation
-    protocols:
     - http
     - https
